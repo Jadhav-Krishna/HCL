@@ -27,34 +27,35 @@ class BankAccount {
     
     public void deposit(double amount) throws InvalidAmountException {
         if(amount <= 0) {
-            throw new InvalidAmountException("Deposit amount must be positive");
+            throw new InvalidAmountException("Deposit amount should be positive");
         }
-        balance += amount;
-        System.out.println("Deposited: " + amount);
-        System.out.println("New Balance: " + balance);
+        balance = balance + amount;
+        System.out.println("Amount Deposited: " + amount);
+        System.out.println("Updated Balance: " + balance);
     }
     
     public void withdraw(double amount) throws InsufficientFundsException, InvalidAmountException {
         if(amount <= 0) {
-            throw new InvalidAmountException("Withdrawal amount must be positive");
+            throw new InvalidAmountException("Withdrawal amount should be positive");
         }
         if(amount > balance) {
-            throw new InsufficientFundsException("Insufficient funds. Available: " + balance);
+            throw new InsufficientFundsException("Insufficient balance. Available balance: " + balance);
         }
-        balance -= amount;
-        System.out.println("Withdrawn: " + amount);
-        System.out.println("New Balance: " + balance);
+        balance = balance - amount;
+        System.out.println("Amount Withdrawn: " + amount);
+        System.out.println("Updated Balance: " + balance);
     }
     
     public void checkBalance() {
-        System.out.println("Current Balance: " + balance);
+        System.out.println("Your Current Balance: " + balance);
     }
     
     public void displayAccountDetails() {
-        System.out.println("\n--- Account Details ---");
+        System.out.println("");
+        System.out.println("--- Account Details ---");
         System.out.println("Account Number: " + accountNumber);
-        System.out.println("Account Holder: " + accountHolder);
-        System.out.println("Balance: " + balance);
+        System.out.println("Account Holder Name: " + accountHolder);
+        System.out.println("Current Balance: " + balance);
     }
 }
 

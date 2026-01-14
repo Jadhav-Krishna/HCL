@@ -12,25 +12,25 @@ public class StudentDAO {
     public StudentDAO() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            createTableIfNotExists();
+            createTable();
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
     
-    private void createTableIfNotExists() {
+    private void createTable() {
         try {
-            Connection conn = DriverManager.getConnection(url, username, password);
-            Statement stmt = conn.createStatement();
-            String createTable = "CREATE TABLE IF NOT EXISTS student_records (" +
+            Connection con = DriverManager.getConnection(url, username, password);
+            Statement st = con.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS student_records (" +
                     "eno INT PRIMARY KEY, " +
                     "name VARCHAR(100), " +
                     "branch VARCHAR(50), " +
                     "percentage DOUBLE, " +
                     "sem INT)";
-            stmt.executeUpdate(createTable);
-            stmt.close();
-            conn.close();
+            st.executeUpdate(sql);
+            st.close();
+            con.close();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -38,15 +38,15 @@ public class StudentDAO {
     
     public void addStudent(Student student) throws InvalidStudentException {
         if(isEnoExists(student.getEno())) {
-            throw new InvalidStudentException("Student Eno must be unique. Eno " + student.getEno() + " already exists");
+            throw new InvalidStudentException("Eno already exists. Please use unique Eno");
         }
         
         if(student.getPercentage() <= 0) {
-            throw new InvalidStudentException("Percentage must be positive");
+            throw new InvalidStudentException("Percentage should be positive");
         }
         
         if(student.getSem() <= 0) {
-            throw new InvalidStudentException("Sem cannot be empty");
+            throw new InvalidStudentException("Semester cannot be empty");
         }
         
         if(student.getBranch() == null || student.getBranch().trim().isEmpty()) {
@@ -54,30 +54,30 @@ public class StudentDAO {
         }
         
         try {
-            Connection conn = DriverManager.getConnection(url, username, password);
-            String query = "INSERT INTO student_records VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, student.getEno());
-            pstmt.setString(2, student.getName());
-            pstmt.setString(3, student.getBranch());
-            pstmt.setDouble(4, student.getPercentage());
-            pstmt.setInt(5, student.getSem());
-            pstmt.executeUpdate();
-            pstmt.close();
-            conn.close();
-            System.out.println("Student added successfully");
+            Connection con = DriverManager.getConnection(url, username, password);
+            String sql = "INSERT INTO student_records VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, student.getEno());
+            ps.setString(2, student.getName());
+            ps.setString(3, student.getBranch());
+            ps.setDouble(4, student.getPercentage());
+            ps.setInt(5, student.getSem());
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+            System.out.println("Student added successfully!");
         } catch(Exception e) {
-            throw new InvalidStudentException("Error adding student: " + e.getMessage());
+            throw new InvalidStudentException("Error in adding student: " + e.getMessage());
         }
     }
     
     private boolean isEnoExists(int eno) {
         try {
-            Connection conn = DriverManager.getConnection(url, username, password);
-            String query = "SELECT * FROM student_records WHERE eno = ?";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, eno);
-            ResultSet rs = pstmt.executeQuery();
+            Connection con = DriverManager.getConnection(url, username, password);
+            String sql = "SELECT * FROM student_records WHERE eno = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, eno);
+            ResultSet rs = ps.executeQuery();
             boolean exists = rs.next();
             rs.close();
             pstmt.close();
