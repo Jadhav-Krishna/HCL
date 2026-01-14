@@ -20,7 +20,7 @@ public class MatrixOperations {
     public static void displayMatrix(int[][] matrix) {
         for(int i = 0; i < matrix.length; i++) {
             for(int j = 0; j < matrix[0].length; j++) {
-                System.out.print(matrix[i][j] + " ");
+                System.out.print(matrix[i][j] + "\t");
             }
             System.out.println();
         }
@@ -31,10 +31,10 @@ public class MatrixOperations {
         int rows = sc.nextInt();
         int cols = sc.nextInt();
         
-        System.out.println("Matrix 1:");
+        System.out.println("Enter Matrix 1:");
         int[][] m1 = inputMatrix(rows, cols);
         
-        System.out.println("Matrix 2:");
+        System.out.println("Enter Matrix 2:");
         int[][] m2 = inputMatrix(rows, cols);
         
         int[][] result = new int[rows][cols];
@@ -44,7 +44,7 @@ public class MatrixOperations {
             }
         }
         
-        System.out.println("Addition Result:");
+        System.out.println("Result of Addition:");
         displayMatrix(result);
     }
     
@@ -53,10 +53,10 @@ public class MatrixOperations {
         int rows = sc.nextInt();
         int cols = sc.nextInt();
         
-        System.out.println("Matrix 1:");
+        System.out.println("Enter Matrix 1:");
         int[][] m1 = inputMatrix(rows, cols);
         
-        System.out.println("Matrix 2:");
+        System.out.println("Enter Matrix 2:");
         int[][] m2 = inputMatrix(rows, cols);
         
         int[][] result = new int[rows][cols];
