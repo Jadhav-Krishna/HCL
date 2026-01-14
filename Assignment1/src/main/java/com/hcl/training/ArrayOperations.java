@@ -74,20 +74,21 @@ public class ArrayOperations {
                 max = arr[i];
             }
         }
-        System.out.println("Maximum value: " + max);
+        System.out.println("Maximum value is: " + max);
     }
     
     public static void countEvenOdd() {
-        int even = 0, odd = 0;
+        int evenCount = 0;
+        int oddCount = 0;
         for(int i = 0; i < arr.length; i++) {
             if(arr[i] % 2 == 0) {
-                even++;
+                evenCount++;
             } else {
-                odd++;
+                oddCount++;
             }
         }
-        System.out.println("Even count: " + even);
-        System.out.println("Odd count: " + odd);
+        System.out.println("Even numbers: " + evenCount);
+        System.out.println("Odd numbers: " + oddCount);
     }
     
     public static void insertionSort() {
@@ -96,7 +97,7 @@ public class ArrayOperations {
             int j = i - 1;
             while(j >= 0 && arr[j] > key) {
                 arr[j + 1] = arr[j];
-                j--;
+                j = j - 1;
             }
             arr[j + 1] = key;
         }
